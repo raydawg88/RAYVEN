@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAYVEN.EXE - Trading System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-overlay"></div>
+
+    <div class="window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-left">
+                <span class="icon">💾</span>
+                <span>RAYVEN.EXE v1.0</span>
+            </div>
+            <div class="title-right">
+                <span id="level-badge">LVL 1</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                </div>
+                <span id="progress-text">0%</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Status Header -->
+            <div class="status-header">
+                <div class="status-left">
+                    <span class="label">TRADING:</span>
+                    <span class="value" id="coin">BTC</span>
+                </div>
+                <div class="status-right">
+                    <span class="label">BALANCE:</span>
+                    <span class="value" id="balance">$59.85</span>
+                </div>
+            </div>
+
+            <!-- Current Cycle Grid -->
+            <div class="section">
+                <div class="section-title">CURRENT CYCLE</div>
+                <div class="cycle-container">
+                    <div class="cycle-grid" id="cycle-grid">
+                        <!-- 9 steps will be generated here -->
+                    </div>
+                    <div class="cycle-labels">
+                        <div class="cycle-label">Fetch</div>
+                        <div class="cycle-label">Price</div>
+                        <div class="cycle-label">Tech</div>
+                        <div class="cycle-label">Intel</div>
+                        <div class="cycle-label">Moon</div>
+                        <div class="cycle-label">Decide</div>
+                        <div class="cycle-label">Execute</div>
+                        <div class="cycle-label">Learn</div>
+                        <div class="cycle-label">Update</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trade History Grid -->
+            <div class="section">
+                <div class="section-title">TRADE HISTORY</div>
+                <div class="history-grid" id="history-grid">
+                    <!-- Trade squares will be generated here -->
+                </div>
+            </div>
+
+            <!-- Status Log -->
+            <div class="section">
+                <div class="section-title">STATUS</div>
+                <div class="status-log">
+                    <div class="log-line" id="status-message">
+                        <span class="prompt">&gt;</span>
+                        <span id="status-text">Initializing RAYVEN...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
