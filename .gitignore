@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Data and logs
+data/*.json
+data/*.csv
+data/*.db
+logs/*.log
+logs/*.txt
+
+# Credentials
+.env
+credentials/
+*.key
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keep structure but ignore contents
+!data/.gitkeep
+!logs/.gitkeep
+!config/.gitkeep
