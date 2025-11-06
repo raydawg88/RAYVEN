@@ -104,22 +104,65 @@ COINBASE_PRIVATE_KEY=-----BEGIN EC PRIVATE KEY-----...
 COINBASE_PROJECT_ID=your-project-id
 ```
 
-3. **Run in dry-run mode** (no real trades, testing only)
+3. **Run with web interface** (90s retro visualization!) 🎮
+```bash
+./start_web.sh --dry-run
+```
+Opens http://localhost:5001 in your browser automatically.
+
+4. **Or run in terminal** (classic log view)
 ```bash
 ./start.sh --dry-run
 ```
 
-4. **Run live trading** (real money!)
+5. **Go live** (real money!)
 ```bash
-./start.sh
+./start_web.sh  # or ./start.sh
 ```
+
+## 🎮 Web Interface
+
+**NEW**: RAYVEN now has a 90s retro web interface!
+
+Instead of scrolling logs, watch your trades come alive in a contribution graph style visualization with CRT scanlines, neon colors, and pulsing animations.
+
+### Features
+- **9-Step Cycle Grid**: Watch each step of the trading process light up
+- **Trade History Grid**: Contribution-style squares (green=win, red=loss)
+- **Live Progress Bar**: Rainbow glow shows progress to next level
+- **Level-Up Animation**: Screen flashes rainbow when you level up
+- **CRT Effects**: Scanlines and screen curvature for authentic 90s feel
+- **Status Log**: See what RAYVEN is thinking in real-time
+- **Tooltips**: Hover over trade squares to see details
+
+### Screenshots
+```
+╔════════════════════════════════════════════════════╗
+║ 💾 RAYVEN.EXE v1.0          LVL 1  ████████░░  68% ║
+╠════════════════════════════════════════════════════╣
+║  TRADING: BTC                      BAL: $62.50    ║
+║                                                    ║
+║  CURRENT CYCLE                                     ║
+║  [█][█][█][█][█][█][⚡][░][░]  ← Step 7/9         ║
+║                                                    ║
+║  TRADE HISTORY                                     ║
+║  [█][█][█][█][█][█][█][█][█][█]                   ║
+║  [█][█][█][█][█][█][█][█][█][█]                   ║
+║                                                    ║
+║  > Analyzing market... RSI oversold detected      ║
+╚════════════════════════════════════════════════════╝
+```
+
+Much more engaging than scrolling text!
 
 ## 📁 Project Structure
 
 ```
 RAYVEN/
-├── main.py                     # Main orchestrator
-├── start.sh                    # Startup script
+├── main.py                     # Main orchestrator (terminal)
+├── main_web.py                 # Main orchestrator (web interface)
+├── start.sh                    # Startup script (terminal)
+├── start_web.sh                # Startup script (web)
 ├── requirements.txt            # Dependencies
 │
 ├── src/
@@ -144,6 +187,14 @@ RAYVEN/
 │   │
 │   └── interface/
 │       └── dashboard.py        # Terminal UI
+│
+├── web/                        # 90s retro web interface
+│   ├── app.py                  # Flask server + WebSocket
+│   ├── templates/
+│   │   └── index.html          # Main page
+│   └── static/
+│       ├── style.css           # 90s retro styling
+│       └── app.js              # Grid animations
 │
 ├── data/                       # Auto-generated, gitignored
 │   ├── trades.json            # Trade history
