@@ -109,6 +109,31 @@ function updateUI(state) {
 
     // Status message
     document.getElementById('status-text').textContent = state.status || 'Running...';
+
+    // Connection status
+    if (state.connection_status) {
+        updateConnectionStatus(state.connection_status);
+    }
+}
+
+// Update connection status indicator
+function updateConnectionStatus(status) {
+    const statusEl = document.getElementById('connection-status');
+    const statusText = statusEl.querySelector('.status-text');
+
+    // Remove all status classes
+    statusEl.classList.remove('connected', 'disconnected', 'coinbase-error');
+
+    if (status === 'connected') {
+        statusEl.classList.add('connected');
+        statusText.textContent = 'CONNECTED';
+    } else if (status === 'coinbase_error') {
+        statusEl.classList.add('coinbase-error');
+        statusText.textContent = 'API ERROR';
+    } else {
+        statusEl.classList.add('disconnected');
+        statusText.textContent = 'DISCONNECTED';
+    }
 }
 
 // Level up animation
@@ -136,11 +161,21 @@ function triggerLevelUp(levelData) {
 socket.on('connect', () => {
     console.log('✅ Connected to RAYVEN');
     document.getElementById('status-text').textContent = 'Connected to RAYVEN...';
+    updateConnectionStatus('connected');
 });
 
 socket.on('disconnect', () => {
     console.log('❌ Disconnected from RAYVEN');
     document.getElementById('status-text').textContent = 'Disconnected - Reconnecting...';
+    updateConnectionStatus('disconnected');
+});
+
+socket.on('connection_status', (data) => {
+    console.log('Connection status:', data.status);
+    updateConnectionStatus(data.status);
+    if (data.message) {
+        document.getElementById('status-text').textContent = data.message;
+    }
 });
 
 socket.on('state_update', (data) => {

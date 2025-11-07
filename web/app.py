@@ -23,7 +23,8 @@ current_state = {
     "current_step": 0,
     "step_name": "Initializing...",
     "trades": [],  # Last 100 trades
-    "status": "Starting RAYVEN..."
+    "status": "Starting RAYVEN...",
+    "connection_status": "disconnected"  # disconnected, connected, coinbase_error
 }
 
 
@@ -78,6 +79,21 @@ def emit_status(message):
     """Emit status message"""
     current_state['status'] = message
     socketio.emit('status', {'message': message})
+
+
+def emit_connection_status(status, message=None):
+    """
+    Emit connection status.
+
+    Args:
+        status: 'connected', 'disconnected', 'coinbase_error'
+        message: Optional status message
+    """
+    current_state['connection_status'] = status
+    socketio.emit('connection_status', {
+        'status': status,
+        'message': message
+    })
 
 
 def run_server():

@@ -20,7 +20,7 @@ from src.strategy.trading_engine import TradingEngine, Action
 
 # Import web interface
 sys.path.insert(0, 'web')
-from web.app import socketio, update_state, emit_step, emit_trade, emit_level_up, emit_status, run_server
+from web.app import socketio, update_state, emit_step, emit_trade, emit_level_up, emit_status, emit_connection_status, run_server
 
 
 class RAYVEN:
@@ -50,9 +50,11 @@ class RAYVEN:
             self.api = CoinbaseAPI()
             print("✅ Coinbase API connected")
             emit_status("Coinbase API connected")
+            emit_connection_status("connected", "Coinbase API connected successfully")
         except Exception as e:
             print(f"❌ Failed to connect to Coinbase API: {e}")
             emit_status(f"ERROR: Coinbase API failed - {e}")
+            emit_connection_status("coinbase_error", f"Coinbase API error: {str(e)}")
             sys.exit(1)
 
         self.moon = MoonTracker()
@@ -113,7 +115,18 @@ class RAYVEN:
                 # Step 1: Fetch balance
                 emit_step(0, "Fetching balance...")
                 time.sleep(0.5)
-                current_balance = self.api.get_total_balance_usd()
+
+                try:
+                    current_balance = self.api.get_total_balance_usd()
+                    # API working - ensure status is connected
+                    if current_balance > 0:
+                        emit_connection_status("connected", "Coinbase API operational")
+                except Exception as e:
+                    print(f"❌ Coinbase API error: {e}")
+                    emit_connection_status("coinbase_error", f"Coinbase API error: {str(e)}")
+                    emit_status(f"⚠️ API Error: {str(e)} - Retrying in {self.loop_interval}s")
+                    time.sleep(self.loop_interval)
+                    continue
 
                 # Step 2: Check progression & level up
                 emit_step(1, "Checking progression...")

@@ -86,7 +86,71 @@ body {
 .title-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+}
+
+/* Connection Status */
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: 2px solid;
+    transition: all 0.3s ease;
+}
+
+.connection-status.connected {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: #00ff00;
+    color: #00ff00;
+}
+
+.connection-status.disconnected {
+    background: rgba(255, 0, 102, 0.1);
+    border-color: #ff0066;
+    color: #ff0066;
+}
+
+.connection-status.coinbase-error {
+    background: rgba(255, 255, 0, 0.1);
+    border-color: #ffff00;
+    color: #ffff00;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.connection-status.connected .status-dot {
+    background: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    animation: pulse-dot 1.5s infinite;
+}
+
+.connection-status.disconnected .status-dot {
+    background: #ff0066;
+    box-shadow: 0 0 10px rgba(255, 0, 102, 0.8);
+}
+
+.connection-status.coinbase-error .status-dot {
+    background: #ffff00;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+    animation: blink-dot 0.5s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+@keyframes blink-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
 .icon {
