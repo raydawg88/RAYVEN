@@ -157,7 +157,7 @@ class RAYVEN:
                 time.sleep(0.5)
                 try:
                     current_price = self.api.get_current_price(pair)
-                    candles = self.api.get_ohlcv(pair, granularity="ONE_HOUR", limit=200)
+                    candles = self.api.get_ohlcv(pair, granularity="ONE_HOUR", count=200)
                 except Exception as e:
                     print(f"❌ Error fetching market data: {e}")
                     emit_status(f"Error: {e}")
@@ -177,7 +177,7 @@ class RAYVEN:
                 # Step 6: Moon phase
                 emit_step(5, "Checking moon phase...")
                 time.sleep(0.5)
-                moon_data = self.moon.get_current_phase()
+                moon_data = self.moon.current_phase()
 
                 # Step 7: Make decision
                 emit_step(6, "Making trading decision...")
