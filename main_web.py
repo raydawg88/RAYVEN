@@ -177,7 +177,7 @@ class RAYVEN:
                 # Step 6: Moon phase
                 emit_step(5, "Checking moon phase...")
                 time.sleep(0.5)
-                moon_data = self.moon.current_phase()
+                moon_data = self.moon.get_current_phase()
 
                 # Step 7: Make decision
                 emit_step(6, "Making trading decision...")

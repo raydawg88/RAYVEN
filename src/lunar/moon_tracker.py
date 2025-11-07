@@ -58,6 +58,19 @@ class MoonTracker:
         self.current_phase = self._calculate_phase(now)
         return self.current_phase
 
+    def get_current_phase(self) -> Dict:
+        """Get current phase as dictionary for easy use"""
+        if self.current_phase is None:
+            self.update()
+
+        return {
+            "phase": self.current_phase.phase_name,
+            "illumination": self.current_phase.illumination * 100,
+            "trading_bias": self._get_trading_bias(self.current_phase),
+            "is_full_moon": self.current_phase.is_full_moon,
+            "is_new_moon": self.current_phase.is_new_moon
+        }
+
     def _calculate_phase(self, date: datetime.datetime) -> LunarData:
         """
         Calculate moon phase for a given date.
